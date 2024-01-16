@@ -30,9 +30,13 @@ export class FirestoreManager {
     this.collection = collection;
   }
 
-  async createDocument(document: Record<string, any>): Promise<string> {
+  async createDocument({
+    data,
+  }: {
+    data: Record<string, any>;
+  }): Promise<string> {
     try {
-      const response = await this.db.collection(this.collection).add(document);
+      const response = await this.db.collection(this.collection).add(data);
       console.log("Response: ", response);
       return "Documento agregado con éxito";
     } catch (error) {
@@ -40,13 +44,15 @@ export class FirestoreManager {
     }
   }
 
-  async readDocument(
-    documentId: string
-  ): Promise<Record<string, any> | string> {
+  async readDocument({
+    id,
+  }: {
+    id: string;
+  }): Promise<Record<string, any> | string> {
     try {
       const documentSnapshot = await this.db
         .collection(this.collection)
-        .doc(documentId)
+        .doc(id)
         .get();
       if (documentSnapshot.exists) {
         console.log(documentSnapshot);
@@ -59,15 +65,18 @@ export class FirestoreManager {
     }
   }
 
-  async updateDocument(
-    documentId: string,
-    newData: Record<string, any>
-  ): Promise<string> {
+  async updateDocument({
+    id,
+    data,
+  }: {
+    id: string;
+    data: Record<string, any>;
+  }): Promise<string> {
     try {
       const response = await this.db
         .collection(this.collection)
-        .doc(documentId)
-        .update(newData);
+        .doc(id)
+        .update(data);
       console.log(response);
       return "Documento actualizado con éxito";
     } catch (error) {
@@ -75,11 +84,11 @@ export class FirestoreManager {
     }
   }
 
-  async deleteDocument(documentId: string): Promise<string> {
+  async deleteDocument({ id }: { id: string }): Promise<string> {
     try {
       const response = await this.db
         .collection(this.collection)
-        .doc(documentId)
+        .doc(id)
         .delete();
       console.log(response);
       return "Documento eliminado con éxito";

@@ -7,7 +7,7 @@ class BooksDTO {
 }
 
 //TODO: reemplazar any
-export const productAsDto = (data: any) => {
+export const bookAsDto = (data: any) => {
   if (Array.isArray(data)) {
     return data.map((book) => new BooksDTO(book));
   } else {

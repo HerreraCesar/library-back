@@ -1,5 +1,5 @@
-import BooksDAO from "./daos/booksDAO";
+import BooksDAO from "./daos/books.dao";
 
-const booksDao = new BooksDAO();
+const booksCollection = new BooksDAO();
 
-export { booksDao };
+export { booksCollection };
