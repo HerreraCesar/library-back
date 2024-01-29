@@ -8,9 +8,12 @@ class BooksDTO {
 
 //TODO: reemplazar any
 export const bookAsDto = (data: any) => {
+  if (data === null) {
+    return [];
+  }
   if (Array.isArray(data)) {
-    return data.map((book) => new BooksDTO(book));
+    return data;
   } else {
-    return new BooksDTO(data);
+    return [data];
   }
 };

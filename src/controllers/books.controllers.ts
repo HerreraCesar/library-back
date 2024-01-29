@@ -17,7 +17,7 @@ export const getBookById = async (req: Request, res: Response) => {
     const data = await booksCollection.readDocument({ id: bookId });
     res.json(bookAsDto(data));
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ message: `error: ${error.toString()}` });
   }
 };
 
@@ -26,7 +26,7 @@ export const postBook = async (req: Request, res: Response) => {
     const book = req.body;
     const data = await booksCollection.createDocument({ data: book });
     console.log(data);
-    res.json();
+    res.json(data);
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +40,7 @@ export const updateBookById = async (req: Request, res: Response) => {
       id: bookId,
       data: updatedBook,
     });
-    res.json(bookAsDto(data));
+    res.json(data);
   } catch (error) {
     console.log(error);
   }
@@ -52,7 +52,7 @@ export const deleteBookById = async (req: Request, res: Response) => {
     const data = await booksCollection.deleteDocument({
       id: bookId,
     });
-    res.json(bookAsDto(data));
+    res.json(data);
   } catch (error) {
     console.log(error);
   }

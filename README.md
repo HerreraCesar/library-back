@@ -1,4 +1,5 @@
 Manejo de errores
 Manejo de respuestas
-Documentación
+Documentación => Postman
 Patrón singleton
+Completar README

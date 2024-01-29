@@ -1,13 +1,13 @@
 import { initializeApp } from "firebase-admin/app";
 import { config } from "../../config";
 import { credential } from "firebase-admin";
-import { getFirestore } from "firebase-admin/firestore";
+import { Firestore, getFirestore } from "firebase-admin/firestore";
 
 export class FirestoreManager {
-  private db: FirebaseFirestore.Firestore;
+  private db: Firestore;
   private collection: string;
   private static initialized = false;
-  private static db: FirebaseFirestore.Firestore;
+  private static db: Firestore;
 
   static initializeApp() {
     if (!FirestoreManager.initialized) {
@@ -58,10 +58,10 @@ export class FirestoreManager {
         console.log(documentSnapshot);
         return documentSnapshot.data();
       } else {
-        return "No se encontró el documento";
+        return null;
       }
     } catch (error) {
-      console.log(error);
+      throw Error;
     }
   }
 
@@ -102,11 +102,10 @@ export class FirestoreManager {
       const querySnapshot = await this.db.collection(this.collection).get();
       const documents: Record<string, any>[] = [];
 
-      querySnapshot.forEach((doc) => {
-        documents.push(doc.data());
+      //TODO: reemplazar any
+      querySnapshot.forEach((doc: any) => {
+        documents.push({ id: doc.id, ...doc.data() });
       });
-
-      console.log(documents);
 
       return documents;
     } catch (error) {
